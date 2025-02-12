@@ -3,13 +3,13 @@ from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-frames = 200
+frames = 800
 t = np.linspace(0,5,frames)
 g = 9.8
-x0 = 0
-vx0 = 5
-m = 3
-k = 500
+x0 = 0.08
+vx0 = 0.5
+m = 0.5
+k = 125
 
 
 
@@ -18,7 +18,7 @@ z0 = x0, vx0
 def move_func(z,t,g,k,m):
     x, vx= z
     dx_dt = vx
-    dvx_dt = g - (k/m) * x
+    dvx_dt = - (k/m) * x - g
     return dx_dt, dvx_dt
 
 sol = odeint(move_func, z0, t, args = (g, k, m))
@@ -32,7 +32,7 @@ def animate(i):
 
 ani = FuncAnimation(fig, animate, frames= frames, interval = 30)
 
-edge = 1
+edge = 0.5
 ax.set_xlim(-edge, edge)
 ax.set_ylim(-edge, edge)
-ani.save('task4.gif', writer = "pillow")
+ani.save('task2_a_dop.gif', writer = "pillow")
