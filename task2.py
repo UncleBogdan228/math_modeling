@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 frames = 500
-t = np.linspace(0, 10, frames)	
+t = np.linspace(0, 1, frames)	
 
 def move_func(s, t):
     (x1, v_x1, y1, v_y1,
@@ -15,40 +15,40 @@ def move_func(s, t):
      x6, v_x6, y6, v_y6)= s
 	
     dxdt1 = v_x1
-    dv_xdt1 = (k * q1 * Q * x1)/m * (x1**2 + y1**2)**1.5
+    dv_xdt1 = (k * q1 * Q * x1)/ (x1**2 + y1**2)**1.5 / m
 	
     dydt1 = v_y1
-    dv_ydt1 = (k * q1 * Q * y1)/m * (x1**2 + y1**2)**1.5
+    dv_ydt1 = (k * q1 * Q * y1)/ (x1**2 + y1**2)**1.5 / m
 	
     dxdt2 = v_x2
-    dv_xdt2 = (k * q2 * Q * x2)/m * (x2**2 + y2**2)**1.5
+    dv_xdt2 = (k * q2 * Q * x2)/(x2**2 + y2**2)**1.5 / m
 
     dydt2 = v_y2
-    dv_ydt2 = (k * q2 * Q * y2)/m * (x2**2 + y2**2)**1.5
+    dv_ydt2 = (k * q2 * Q * y2)/(x2**2 + y2**2)**1.5 /  m
 
     dxdt3 = v_x3
-    dv_xdt3 = (k * q3 * Q * x3)/m * (x3**2 + y3**2)**1.5
+    dv_xdt3 = (k * q3 * Q * x3)/ (x3**2 + y3**2)**1.5 / m 
 
     dydt3 = v_y3
-    dv_ydt3 = (k * q3 * Q * y3)/m * (x3**2 + y3**2)**1.5
+    dv_ydt3 = (k * q3 * Q * y3)/ (x3**2 + y3**2)**1.5 / m
 
     dxdt4 = v_x4
-    dv_xdt4 = (k * q4 * Q * x4)/m * (x4**2 + y4**2)**1.5
+    dv_xdt4 = (k * q4 * Q * x4)/ (x4**2 + y4**2)**1.5 / m
 
     dydt4 = v_y4
-    dv_ydt4 = (k * q4 * Q * y4)/m * (x4**2 + y4**2)**1.5
+    dv_ydt4 = (k * q4 * Q * y4)/ (x4**2 + y4**2)**1.5 / m 
 
     dxdt5 = v_x5
-    dv_xdt5 = (k * q5 * Q * x5)/m * (x5**2 + y5**2)**1.5
+    dv_xdt5 = (k * q5 * Q * x5)/ (x5**2 + y5**2)**1.5 / m
 
     dydt5 = v_y5
-    dv_ydt5 = (k * q5 * Q * y5)/m * (x5**2 + y5**2)**1.5
+    dv_ydt5 = (k * q5 * Q * y5)/ (x5**2 + y5**2)**1.5 / m
 
     dxdt6 = v_x6
-    dv_xdt6 = (k * q6 * Q * x6)/m * (x6**2 + y6**2)**1.5
+    dv_xdt6 = (k * q6 * Q * x6)/ (x6**2 + y6**2)**1.5 / m
 
     dydt6 = v_y6
-    dv_ydt6 = (k * q6 * Q * y6)/m * (x6**2 + y6**2)**1.5
+    dv_ydt6 = (k * q6 * Q * y6)/ (x6**2 + y6**2)**1.5 / m
 
 
     return (dxdt1, dv_xdt1, dydt1, dv_ydt1,	
@@ -63,42 +63,42 @@ def move_func(s, t):
 
 k = 9 * 10 ** 9
 m = 0.1
-Q = 50
+Q = 50 * 10 ** - 3
 
-q1 = 3
-x10 = -1
-v_x10 = 0,1
-y10 = 1
+q1 = 3 * 10 ** -4
+x10 = -30
+v_x10 = 100
+y10 = 15
 v_y10 = 0
 
-q2 = -3
-x20 = -1
-v_x20 = 0,1
-y20 = 0,5
+q2 = -3 * 10 ** -4
+x20 = -30
+v_x20 = 100
+y20 = 10
 v_y20 = 0
 
-q3 = 2
-x30 = -1
-v_x30 = 0,1
-y30 = 0.25
+q3 = 2 * 10 ** -4
+x30 = -30
+v_x30 = 100
+y30 = 5
 v_y30 = 0
 
-q4 = -2
-x40 = -1
-v_x40 = 0,1
-y40 = -0.25
+q4 = -2 * 10 ** - 4
+x40 = -30
+v_x40 = 100
+y40 = - 5
 v_y40 = 0
 
-q5 = 1
-x50 = -1
-v_x50 = 0.1
-y50 = -0.5
+q5 = 1 * 10 ** -4
+x50 = -30
+v_x50 = 100
+y50 = - 10
 v_y50 = 0
 
-q6 = -1
-x60 = -1
-v_x60 = 0.1
-y60 = -1
+q6 = -1 * 10 ** -4
+x60 = -30
+v_x60 = 100
+y60 = -15
 v_y60 = 0
 
 
@@ -154,9 +154,9 @@ def animate(i):
 ani = FuncAnimation(fig, animate, frames=frames, interval=30)
 	
  
-plt.plot([0], [0], 'o', color = 'y', ms = 0.5)
+plt.plot([0], [0], 'o', color = 'y', ms = 20)
 
-edge = 1.5
+edge = 50
 plt.axis('equal')
 ax.set_xlim(-edge, edge)
 ax.set_ylim(-edge, edge)
