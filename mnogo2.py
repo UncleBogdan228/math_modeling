@@ -4,22 +4,30 @@ import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d.axes3d as p3
 from matplotlib.animation import FuncAnimation
 
-#переменная величина
-t = np.linspace (0, 5, 5000) 
-q = 1.6 * 10**(-19) #заряд
-m = 9.1 * 10**(-31) #масса электрона
-mu = 1.26 * 10**(-6) #магнитная постоянная
-mu_d = 2 * 10**2 #магнитный момент диполя
-edge = 50 
-x_edge = 50 
+# переменная величина
+t = np.linspace(0, 5, 5000)
+q = 1.6 * 10 ** (-19)  # заряд
+m = 9.1 * 10 ** (-31)  # масса электрона
+mu = 1.26 * 10 ** (-6)  # магнитная постоянная
+mu_d = 2 * 10 ** 2  # магнитный момент диполя
+edge = 210
+x_edge = 210
 
-def move_func (s, t):
+
+def move_func(s, t):
     x, v_x, y, v_y, z, v_z = s
 
-    Bx = 3 * x * z * mu_d * mu / (x**2 + y**2 + z**2)**(5/2)
-    By = 3 * y * z * mu_d * mu / (x**2 + y**2 + z**2)**(5/2)
-    Bz = (2 * z**2 - x**2 - y**2) * mu_d * mu / (x**2 + y**2 + z**2)**(5/2)
-    
+    r = (x ** 2 + y ** 2 + z ** 2) ** (0.5)
+
+    if r < 1e-6:
+        Bx = 0
+        By = 0
+        Bz = 0
+    else:
+        Bx = 3 * x * z * mu_d * mu / (x ** 2 + y ** 2 + z ** 2) ** (5 / 2)
+        By = 3 * y * z * mu_d * mu / (x ** 2 + y ** 2 + z ** 2) ** (5 / 2)
+        Bz = (2 * z ** 2 - x ** 2 - y ** 2) * mu_d * mu / (x ** 2 + y ** 2 + z ** 2) ** (5 / 2)
+
     dxdt = v_x
     dv_xdt = q / m * (v_y * Bz - By * v_z)
 
@@ -32,76 +40,74 @@ def move_func (s, t):
     return dxdt, dv_xdt, dydt, dv_ydt, dzdt, dv_zdt
 
 
-wave_width = 20  # Ширина 
-wave_height = 10 # Высота 
-num_points_x = 5  # Количество точек по x 
-num_points_y = 10 # Количество точек по y 
-x_start = -40    # Начальное положение по x 
-y_offset = 15     # Смещение по оси y вправо
-v_x = 200        # Скорость "налета" по x
-exclusion_radius = 2 # Радиус исключения вокруг (0, 0, 0)
+wave_width = 50  # Ширина
+wave_height = 50 # Высота
+num_points_x = 20  # Количество точек по x
+num_points_y = 20  # Количество точек по y
+x_start = 200  # Начальное положение по x
+y_offset = 0  # Смещение по оси y вправо
+v_x = -280 # Скорость "налета" по x
+exclusion_radius = 2  # Радиус исключения вокруг (0, 0, 0)
 
-# Генерация начальных положений 
+# Генерация начальных положений
 initial_positions = []
-for x in np.linspace(-wave_height/2, wave_height/2, num_points_x): 
-    for z in np.linspace(-wave_width/2, wave_width/2, num_points_y): 
-       
-        if (x**2 + y_offset**2 + z**2)**(0.5) > exclusion_radius: 
-             initial_positions.append((x_start, v_x, y_offset, 0, z, 0))  
+for x in np.linspace(-wave_height / 2, wave_height / 2, num_points_x):
+    for z in np.linspace(-wave_width / 2, wave_width / 2, num_points_y):
 
+        if (x ** 2 + y_offset ** 2 + z ** 2) ** (0.5) > exclusion_radius:
+            initial_positions.append((x_start, v_x, y_offset, 0, z, 0))
 
 solutions = []
 for s0 in initial_positions:
     sol = odeint(move_func, s0, t)
     solutions.append(sol)
 
-
 x_data = [sol[:, 0] for sol in solutions]
 y_data = [sol[:, 2] for sol in solutions]
 z_data = [sol[:, 4] for sol in solutions]
 
-fig = plt.figure() 
+fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-ax.set_xlim([-x_edge, x_edge])   
+ax.set_xlim([-x_edge, x_edge])
 ax.set_ylim([-edge, edge])
 ax.set_zlim([-edge, edge])
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Z")
 
-
 balls = []
 lines = []
 for _ in range(len(solutions)):
-    ball, = ax.plot([], [], [], 'o', color='r')
+    ball, = ax.plot([], [], [], 'o', color='r', markersize=2)
     line, = ax.plot([], [], [], lw=2)
     balls.append(ball)
     lines.append(line)
 
+
 def init():
-   
     for ball, line in zip(balls, lines):
         ball.set_data([], [])
         ball.set_3d_properties([])
         line.set_data([], [])
         line.set_3d_properties([])
-    return tuple(balls + lines) 
+    return tuple(balls + lines)
+
 
 def update(frame):
-    
     for i in range(len(solutions)):
         balls[i].set_data([x_data[i][frame]], [y_data[i][frame]])
         balls[i].set_3d_properties(z_data[i][frame])
 
-        lines[i].set_data(x_data[i][:frame+1], y_data[i][:frame+1]) 
-        lines[i].set_3d_properties(z_data[i][:frame+1])
+        lines[i].set_data(x_data[i][:frame + 1], y_data[i][:frame + 1])
+        lines[i].set_3d_properties(z_data[i][:frame + 1])
 
     return tuple(balls + lines)
 
 
-for sol in solutions: 
-    ax.plot(sol[:, 0], sol[:, 2], sol[:, 4], alpha=0.3) 
+for sol in solutions:
+    ax.plot(sol[:, 0], sol[:, 2], sol[:, 4], alpha=0.3)
 
-ani = FuncAnimation(fig, update, frames=len(t), interval=1) 
-ani.save('mnogo2.gif', writer='imagemagick')  
+ani = FuncAnimation(fig, update, frames=len(t), interval=1, init_func=init)
+#ani.save('mnogo2.gif', writer='imagemagick')
+plt.show()
