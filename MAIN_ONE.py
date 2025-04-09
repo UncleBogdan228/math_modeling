@@ -8,10 +8,10 @@ from matplotlib.animation import FuncAnimation
 t = np.linspace (0, 4, 4000)
 
 #начальные значения
-x0 = 10
+x0 = -10
 v_x0 = 0
  
-y0 = 20
+y0 = -20
 v_y0 = -10
 
 z0 = 0

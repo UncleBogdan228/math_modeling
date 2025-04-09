@@ -5,7 +5,7 @@ import mpl_toolkits.mplot3d.axes3d as p3
 # Константы
 mu_0 = 1.26 * 10 ** (-6)  
 mu_d = 200 
-edge = 15 
+edge = 30
 
 def move_func (x, y, z, mu=mu_d, mu_00=mu_0):
 
