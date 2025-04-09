@@ -5,7 +5,7 @@ import mpl_toolkits.mplot3d.axes3d as p3
 from matplotlib.animation import FuncAnimation
 
 #переменная величина
-t = np.linspace (0, 4, 4000)
+t = np.linspace (0, 1, 5000)
 
 #начальные значения
 x0 = 10
@@ -22,7 +22,7 @@ q = 1.6 * 10 ** (-19) #заряд
 m = 9.1 * 10 ** (-31) #масса электрона
 mu = 1.26 * 10 ** (-6) #магнитная постоянная
 mu_d = 2 * 10 ** 2 #магнитный момент диополя
-edge = 30
+edge = 55
 
 def move_func (s, t):
     x, v_x, y, v_y, z, v_z = s

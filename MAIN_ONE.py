@@ -15,7 +15,7 @@ y0 = -20
 v_y0 = -10
 
 z0 = 0
-v_z0 = 10**3
+v_z0 = 100
 
 s0 = x0, v_x0, y0, v_y0, z0, v_z0
 
@@ -82,6 +82,6 @@ def update(frame):
 
 ax.plot(sol[:, 0], sol [:, 2], sol [:, 4])
 ani = FuncAnimation(fig, update, frames=200, interval=1)
-ani.save('test.gif')
+ani.save('test.mp4')
 
 

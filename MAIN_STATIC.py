@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d.axes3d as p3
 
 # Константы
-mu_0 = 1.26 * 10 ** (-6)  
-mu_d = 200 
-edge = 30
+mu_0 = 1.26e-6
+mu_d = 200
+edge = 80
 
 def move_func (x, y, z, mu=mu_d, mu_00=mu_0):
 
@@ -13,7 +13,7 @@ def move_func (x, y, z, mu=mu_d, mu_00=mu_0):
     if r < 1e-6:
         return np.array([0, 0, 0])
 
-    m = mu*mu_00 
+    m = mu*mu_00
 
     B_x = (3 * m * x * z) / (4 * np.pi * r**5)
     B_y = (3 * m * y * z) / (4 * np.pi * r**5)
@@ -22,7 +22,7 @@ def move_func (x, y, z, mu=mu_d, mu_00=mu_0):
     return np.array([B_x, B_y, B_z])
 
 
-def field_lines(x_start, y_start, z_start, step_size=0.5, max_steps=200):
+def field_lines(x_start, y_start, z_start, step_size=0.5, max_steps=500):
 
     x = [x_start]
     y = [y_start]
@@ -53,10 +53,10 @@ start_range = np.linspace(-edge,edge, num_lines)
 for x_start in start_range:
     for y_start in start_range:
         # Задаем начальную точку и генерируем линии поля
-        x, y, z = field_lines(x_start, y_start, 5) 
+        x, y, z = field_lines(x_start, y_start, 5)
         ax.plot(x, y, z, color='deepskyblue', linewidth=0.7)
 
-        x, y, z = field_lines(x_start, y_start, -5)  
+        x, y, z = field_lines(x_start, y_start, -5)
         ax.plot(x, y, z, color='deepskyblue', linewidth=0.7)
 
 ax.set_xlabel('X')
