@@ -43,7 +43,7 @@ def move_func(s, t):
 wave_width = 100  # Ширина
 wave_height = 100  # Высота
 wave_depth = 50 # Глубина (ширина в координате Y)
-num_points_x = 10  # Количество точек по x (высоте)
+num_points_x = 10 # Количество точек по x (высоте)
 num_points_z = 10 # Количество точек по z (ширине)
 num_points_y = 10  # Количество точек по y (глубине)
 
@@ -52,7 +52,6 @@ y_offset = 0  # Смещение по оси y вправо
 v_x = 300# Скорость "налета" по x
 exclusion_radius = 2  # Радиус исключения вокруг (0, 0, 0)
 
-# Генерация начальных положений
 initial_positions = []
 for x in np.linspace(-wave_height / 2, wave_height / 2, num_points_x):
     for z in np.linspace(-wave_width / 2, wave_width / 2, num_points_z):
@@ -108,7 +107,7 @@ def update(frame):
     return tuple(balls + lines)
 
 ani = FuncAnimation(fig, update, frames=len(t), interval=1, init_func=init)
-for sol in solutions:
-    ax.plot(sol[:, 0], sol[:, 2], sol[:, 4], alpha=0.3)
-#ani.save('mnogo2.gif', writer='imagemagick')
-plt.show()
+#for sol in solutions:
+    #ax.plot(sol[:, 0], sol[:, 2], sol[:, 4], alpha=0.3)
+ani.save('mnogo2.gif', writer='imagemagick')
+#plt.show()

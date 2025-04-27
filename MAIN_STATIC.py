@@ -52,7 +52,6 @@ start_range = np.linspace(-edge,edge, num_lines)
 
 for x_start in start_range:
     for y_start in start_range:
-        # Задаем начальную точку и генерируем линии поля
         x, y, z = field_lines(x_start, y_start, 5)
         ax.plot(x, y, z, color='deepskyblue', linewidth=0.7)
 

@@ -82,6 +82,6 @@ def update(frame):
 
 ax.plot(sol[:, 0], sol [:, 2], sol [:, 4])
 ani = FuncAnimation(fig, update, frames=200, interval=1)
-ani.save('test.mp4')
+ani.save('test.gif',  writer='imagemagick', fps=30)
 
 
